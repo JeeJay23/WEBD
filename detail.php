@@ -17,7 +17,6 @@
         <ul class="nav nav-pills">
             <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
             <li class="nav-item"><a href="#" class="nav-link">Overview</a></li>
-            <li class="nav-item"><a href="shopping-cart.php" class="nav-link">Shopping Cart</a></li>
             <li class="nav-item"><a href="#" class="nav-link">Login</a></li>
         </ul>
     </header>
@@ -90,32 +89,10 @@
         </div>
 
         <div class="container">
-            <div class="row mb-3">
-                <div class="col-3">
-                    <img src="img/bb1.jpg" width="200" height="200" alt="bb 1" srcset="">
-                    <p>Beyblade Burst QuadStrike Xcalius Power Speed Launcher Pack Battle Set with Xcalius Launcher and Spinning Spool</p>
-                    <a href="detail.php" class="btn btn-primary">View</a>
-                </div>
-                <div class="col-3">
-                    <img src="img/bb2.jpg" width="200" height="200" alt="bb 1" srcset="">
-                    <p>EBKCQ Bey Blade Gyro Metal Super Combat, Beyblade Metal Fusion Toll for Children from 4, 5, 6, 7 Years, for Children and Adults with Launcher</p>
-                    <a href="detail.php" class="btn btn-primary">View</a>
-                </div>
-                <div class="col-3">
-                    <img src="img/bb0.jpeg" width="200" height="200" alt="bb 1" srcset="">
-                    <p>Beyblade N</p>
-                    <a href="detail.php" class="btn btn-primary">View</a>
-                </div>
-                <div class="col-3">
-                    <img src="img/bb0.jpeg" width="200" height="200" alt="bb 1" srcset="">
-                    <p>Beyblade N</p>
-                    <a href="detail.php" class="btn btn-primary">View</a>
-                </div>
-                <div class="col-3">
-                    <img src="img/bb0.jpeg" width="200" height="200" alt="bb 1" srcset="">
-                    <p>Beyblade N</p>
-                    <a href="detail.php" class="btn btn-primary">View</a>
-                </div>
+            <div class="row">
+                <img src="img/bb0.jpeg" alt="" srcset="">
+                <h1>Beyblade 1</h1>
+                <p>Description text</p>
             </div>
         </div>
     </div>
