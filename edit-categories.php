@@ -70,9 +70,9 @@
                             <div class="col mb-3">
                                 <select name="idParentcategory" class="form-control">
                                     <option value="">None</option>
-                                    <!-- <?php foreach ($categories as $category) : ?>
+                                    <?php // foreach ($categories as $category) : ?>
                                         <option value="<?= $category['ID'] ?>"><?= $category['strName'] ?></option>
-                                    <?php endforeach; ?> -->
+                                    <?php  // endforeach; ?>
                                 </select>
                             </div>
                             <button type="submit" class="col mb-3 btn btn-primary">Update</button>
