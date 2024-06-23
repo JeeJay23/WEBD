@@ -5,120 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WEBD project</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .flex-container {
+            display: flex;
+            height: 100vh; /* Full height */
+        }
+        .content {
+            flex: 1; /* Take up the remaining space */
+        }
+    </style>
 </head>
 
 <body>
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-        <a href="/WEBD" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-            <img class="bi me-2" width="40" height="32" src="img/_8c57455a-bd11-4b52-af7d-1652585a6dbd.jpeg" alt="logo">
-            <span class="fs-4">Browse 4 Beyblades</span>
-        </a>
+    <?php include 'database.php'; ?>
+    <?php include 'navbar.php'; ?>
 
-        <ul class="nav nav-pills">
-            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Overview</a></li>
-            <li class="nav-item"><a href="shopping-cart.php" class="nav-link">Shopping Cart</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Login</a></li>
-        </ul>
-    </header>
-
-    <div class="d-flex flex-nowrap">
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
-            <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                <img src="img/_8c57455a-bd11-4b52-af7d-1652585a6dbd.jpeg" width="100" height="100" alt="" srcset="">
-                <span class="fs-4">Categories</span>
-            </a>
-            <hr>
-            <ul class="nav nav-pills flex-column mb-auto">
-                <li class="nav-item">
-                    <a href="#" class="nav-link active" aria-current="page">
-                        <svg class="bi pe-none me-2" width="16" height="16">
-                            <use xlink:href="#home"></use>
-                        </svg>
-                        Home
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link text-white">
-                        <svg class="bi pe-none me-2" width="16" height="16">
-                            <use xlink:href="#speedometer2"></use>
-                        </svg>
-                        Dashboard
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link text-white">
-                        <svg class="bi pe-none me-2" width="16" height="16">
-                            <use xlink:href="#table"></use>
-                        </svg>
-                        Orders
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link text-white">
-                        <svg class="bi pe-none me-2" width="16" height="16">
-                            <use xlink:href="#grid"></use>
-                        </svg>
-                        Products
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link text-white">
-                        <svg class="bi pe-none me-2" width="16" height="16">
-                            <use xlink:href="#people-circle"></use>
-                        </svg>
-                        Customers
-                    </a>
-                </li>
-            </ul>
-            <hr>
-            <div class="dropdown">
-                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                    <strong>mdo</strong>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark text-small shadow" style="">
-                    <li><a class="dropdown-item" href="#">New project...</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
-                </ul>
-            </div>
-        </div>
-
+    <div class="flex-container">
+        <?php include 'sidebar.php'; ?>
         <div class="container">
             <div class="row mb-3">
-                <div class="col-3">
-                    <img src="img/bb1.jpg" width="200" height="200" alt="bb 1" srcset="">
-                    <p>Beyblade Burst QuadStrike Xcalius Power Speed Launcher Pack Battle Set with Xcalius Launcher and Spinning Spool</p>
-                    <a href="detail.php" class="btn btn-primary">View</a>
-                </div>
-                <div class="col-3">
-                    <img src="img/bb2.jpg" width="200" height="200" alt="bb 1" srcset="">
-                    <p>EBKCQ Bey Blade Gyro Metal Super Combat, Beyblade Metal Fusion Toll for Children from 4, 5, 6, 7 Years, for Children and Adults with Launcher</p>
-                    <a href="detail.php" class="btn btn-primary">View</a>
-                </div>
-                <div class="col-3">
-                    <img src="img/bb0.jpeg" width="200" height="200" alt="bb 1" srcset="">
-                    <p>Beyblade N</p>
-                    <a href="detail.php" class="btn btn-primary">View</a>
-                </div>
-                <div class="col-3">
-                    <img src="img/bb0.jpeg" width="200" height="200" alt="bb 1" srcset="">
-                    <p>Beyblade N</p>
-                    <a href="detail.php" class="btn btn-primary">View</a>
-                </div>
-                <div class="col-3">
-                    <img src="img/bb0.jpeg" width="200" height="200" alt="bb 1" srcset="">
-                    <p>Beyblade N</p>
-                    <a href="detail.php" class="btn btn-primary">View</a>
-                </div>
+                <?php
+                    // Query to fetch data
+                    $sql = "SELECT * FROM tblproduct";
+                    $result = $mysqli->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        // Output data for each row
+                        while ($row = $result->fetch_assoc()) {
+                            // Convert the blob to a base64 encoded string
+                            $image = base64_encode($row['blbThumbnail']);
+                            echo '<div class="col-3">';
+                            echo '<img src="data:image/jpeg;base64,' . $image . '" width="200" height="200" alt="bb 1" srcset="">';
+                            echo '<p>' . $row['strName'] . '</p>';
+                            echo '<p>€' . $row['fltPrice'] . '</p>';
+                            echo '<a href="detail.php" class="btn btn-primary">View</a>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo "No results";
+                    }
+                ?>
             </div>
         </div>
     </div>
+
+
 
     <!-- reload page on click for easy debugging -->
     <script>
