@@ -30,8 +30,10 @@
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
                     <li><a class="dropdown-item" href="#">Account Settings</a></li>
                     <?php if ($_SESSION['admin']): ?>
-                        <li><a class="dropdown-item" href="#">Admin Settings</a></li>
+                        <li><a class="text-warning dropdown-item" href="edit-categories.php">edit categories</a></li>
+                        <li><a class="text-warning dropdown-item" href="edit-products.php">edit products</a></li>
                     <?php endif; ?>
+                    <li><a class="text-danger dropdown-item" href="#">Logout</a></li>
                 </ul>
             </li>
         <?php else: ?>
