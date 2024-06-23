@@ -12,7 +12,7 @@ $email = $_POST['email'];
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
 // Insert the user into the database
-$stmt = $mysqli->prepare("INSERT INTO tblUser (strUsername, hshPassword, strEmail, blAdmin) VALUES (?, ?, ?, true)");
+$stmt = $mysqli->prepare("INSERT INTO tblUser (strUsername, hshPassword, strEmail, blAdmin) VALUES (?, ?, ?, false)");
 $stmt->bind_param("sss", $username, $hashedPassword, $email);
 $stmt->execute();
 
