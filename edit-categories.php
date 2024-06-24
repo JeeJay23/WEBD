@@ -14,7 +14,7 @@
     include 'common-functions.php';
     include 'navbar.php';
     // Fetch all categories
-    $categories = getCategories($mysqli);
+    $categories = getCategoriesFlat($mysqli);
 
     // Handle form submission
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -22,8 +22,10 @@
             createCategory($mysqli, $_POST['strName'], $_POST['idParentcategory']);
         } elseif ($_POST['action'] === 'update') {
             if (!isset($_POST['idParentCategory'])) {
+                echo 'no parent category selected';
                 updateCategory($mysqli, $_POST['ID'], $_POST['strName'], null);
             } else {
+                echo 'parent category selected';
                 updateCategory($mysqli, $_POST['ID'], $_POST['strName'], $_POST['idParentCategory']);
             }
         } elseif ($_POST['action'] === 'delete') {
@@ -31,7 +33,7 @@
         }
 
         // Refresh categories after changes
-        $categories = getCategories($mysqli);
+        $categories = getCategoriesFlat($mysqli);
     }
     ?>
 
@@ -68,11 +70,22 @@
                                 <input type="text" name="strName" class="form-control" value="<?= $category['strName'] ?>" required>
                             </div>
                             <div class="col mb-3">
-                                <select name="idParentcategory" class="form-control">
+                                <select name="idParentCategory" class="form-control">
                                     <option value="">None</option>
-                                    <?php // foreach ($categories as $category) : ?>
-                                        <option value="<?= $category['ID'] ?>"><?= $category['strName'] ?></option>
-                                    <?php  // endforeach; ?>
+                                    <?php foreach ($categories as $subcategory) : ?>
+                                        <option 
+                                            value="<?= $subcategory['ID'] ?>" 
+                                            <?php 
+                                                if ($category['ID'] == $subcategory['ID']) {
+                                                    echo 'disabled';
+                                                }
+                                                if ($subcategory['ID'] == $category['idParentCategory']) {
+                                                    echo 'selected';
+                                                }
+                                             ?> >
+                                            <?= $subcategory['strName'] ?>
+                                        </option>
+                                    <?php  endforeach; ?>
                                 </select>
                             </div>
                             <button type="submit" class="col mb-3 btn btn-primary">Update</button>
@@ -83,32 +96,6 @@
                         <input type="hidden" name="ID" value="<?= $category['ID'] ?>">
                         <button type="submit" class="btn btn-danger">Delete Category</button>
                     </form>
-
-                    <?php foreach ($category['subcategories'] as $subcategory) : ?>
-                        <form action="" method="post">
-                            <input type="hidden" name="action" value="update">
-                            <input type="hidden" name="ID" value="<?= $subcategory['ID'] ?>">
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <input type="text" name="strName" class="form-control" value="<?= $subcategory['strName'] ?>" required>
-                                </div>
-                                <div class="col mb-3">
-                                    <select name="idParentcategory" class="form-control">
-                                        <option value="">None</option>
-                                        <?php foreach ($categories as $category) : ?>
-                                            <option value="<?= $category['ID'] ?>"><?= $category['strName'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Update Category</button>
-                        </form>
-                        <form action="" method="post">
-                            <input type="hidden" name="action" value="delete">
-                            <input type="hidden" name="ID" value="<?= $subcategory['ID'] ?>">
-                            <button type="submit" class="btn btn-danger">Delete Category</button>
-                        </form>
-                    <?php endforeach; ?>
                 </div>
             <?php endforeach; ?>
         </div>

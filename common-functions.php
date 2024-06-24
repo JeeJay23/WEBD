@@ -24,6 +24,23 @@ function getCategories($mysqli)
     return $categories;
 }
 
+function getCategoriesFlat($mysqli)
+{
+    $sql = "SELECT c.ID, c.strName, c.idParentCategory, p.ID as idParent, p.strName as strParentName FROM category c
+    left join category p on c.idParentCategory = p.ID";
+    $result = $mysqli->query($sql);
+
+    // Initialize an array to hold the categories
+    $categories = array();
+
+    // Loop through the categories
+    while ($row = $result->fetch_assoc()) {
+        $categories[] = $row;
+    }
+
+    return $categories;
+}
+
 function createCategory($mysqli, $strName, $idParentCategory = null)
 {
     if ($idParentCategory == null) {
