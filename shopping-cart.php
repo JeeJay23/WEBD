@@ -16,20 +16,85 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($_POST['action'] === 'add') {
-            echo 'add';
+            // add product to session
+            $_SESSION['cart'][$_POST['ID']] += $_POST['quantity'];
+
         } elseif ($_POST['action'] === 'update') {
             echo 'update';
         } elseif ($_POST['action'] === 'delete') {
-            echo 'delete';
+            $_SESSION['cart'][$_POST['ID']] -= 1;
         } elseif ($_POST['action'] === 'checkout') {
-            echo 'checkout';
+            placeOrder($mysqli, $_SESSION['uid'], $_SESSION['cart']);
+            $_SESSION['cart'] = [];
+            echo '<div class="alert alert-success" role="alert">';
         }
     }
     ?>
 
     <div class="flex-container">
         <div class="container">
+            <h1>Shopping cart</h1>
+            <!-- Table for cart -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($_SESSION['cart'] as $productId => $quantity) {
+                        if ($quantity <= 0) {
+                            unset($_SESSION['cart'][$productId]);
+                            continue;
+                        }
+                        $product = getProduct($mysqli, $productId);
+                        $total = $product['fltPrice'] * $quantity;
+                        ?>
+                        <tr>
+                            <td><?php echo $product['strName']; ?></td>
+                            <td><?php echo $quantity; ?></td>
+                            <td><?php echo $product['fltPrice']; ?></td>
+                            <td><?php echo $total; ?></td>
+                            <td>
+                                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                    <input type="hidden" name="ID" value="<?php echo $productId; ?>">
+                                    <input type="hidden" name="action" value="update">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+                                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                    <input type="hidden" name="ID" value="<?php echo $productId; ?>">
+                                    <input type="hidden" name="action" value="delete">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                    <tr>
+                        <td colspan="3"></td>
+                        <?php $totalPrice = 0;
+                        foreach ($_SESSION['cart'] as $productId => $quantity) {
+                            $product = getProduct($mysqli, $productId);
+                            $totalPrice += $product['fltPrice'] * $quantity;
+                        }
+                        echo '<td>' . $totalPrice . '</td>';
+                        ?>
 
+                        <td>
+                            <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                <input type="hidden" name="action" value="checkout">
+                                <button type="submit" class="btn btn-success">Checkout</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     

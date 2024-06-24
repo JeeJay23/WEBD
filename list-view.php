@@ -2,25 +2,24 @@
     <?php
     // Query to fetch data
     if (isset($category) && !is_array($category)) {
-        $sql = "SELECT * FROM tblproduct WHERE idCategory = " . $category;
+        $products = getProductsByCategory($mysqli, $category);
     } else {
-        $sql = "SELECT * FROM tblproduct";
-    }
-    $result = $mysqli->query($sql);
-
-    if ($result->num_rows > 0) {
-        // Output data for each row
-        while ($row = $result->fetch_assoc()) {
-            $productID = $row['ID'];
-            echo '<div class="col-3">';
-            echo '<img src="' . $row['pthFullImage'] . '" width="200" height="200" alt="bb 1" srcset="">';
-            echo '<p>' . $row['strName'] . '</p>';
-            echo '<p class="text-primary">€' . $row['fltPrice'] . '</p>';
-            echo '<a href="detail.php?id=' . $productID . '"class="btn btn-primary">View</a>';
-            echo '</div>';
-        }
-    } else {
-        echo "No results";
+        $products = getProducts($mysqli);
     }
     ?>
+
+    <?php foreach ($products as $product) : ?>
+        <div class="col-3">
+            <img src="<?= $product['pthFullImage'] ?>" width="200" height="200" alt="bb 1" srcset="">
+            <p><?= $product['strName'] ?></p>
+            <p class="text-primary">€<?= $product['fltPrice'] ?></p>
+            <a href="detail.php?id=<?= $product['ID'] ?>" class="btn btn-primary">View</a>
+            <form action="shopping-cart.php" method="post">
+                <input type="hidden" name="ID" value="<?= $product['ID'] ?>">
+                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="btn btn-success">Add to cart</button>
+            </form>
+        </div>
+    <?php endforeach; ?>
 </div>

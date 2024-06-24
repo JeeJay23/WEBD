@@ -103,6 +103,25 @@ function getProduct($mysqli, $id)
     return $result->fetch_assoc();
 }
 
+function getProductsByCategory($mysqli, $idCategory)
+{
+    $sql = "SELECT * FROM tblProduct WHERE idCategory = ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param('i', $idCategory);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Initialize an array to hold the products
+    $products = array();
+
+    // Loop through the products
+    while ($row = $result->fetch_assoc()) {
+        $products[] = $row;
+    }
+
+    return $products;
+}
+
 function updateProduct($mysqli, $id, $strName, $idCategory, $blbFullImage, $strDescription, $fltPrice)
 {
     // Handle the file upload
@@ -136,5 +155,61 @@ function createProduct($mysqli, $strName, $idCategory, $blbFullImage, $strDescri
     $sql = "INSERT INTO tblProduct (strName, idCategory, pthFullImage, strDescription, fltPrice) VALUES (?, ?, ?, ?, ?)";
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param('sisss', $strName, $idCategory, $target_file, $strDescription, $fltPrice);
+    $stmt->execute();
+}
+
+function placeOrder($mysqli, $uid, $cart)
+{
+    $sql = "INSERT INTO tblOrder (idOwner, dtDate, strStatus) VALUES (?, CURDATE(), 'In progress')";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param('i', $uid);
+    $stmt->execute();
+
+    $orderID = $mysqli->insert_id;
+
+    foreach ($cart as $productID => $quantity) {
+        $sql = "INSERT INTO tblOrderProduct (idOrder, idProduct, intAmount) VALUES (?, ?, ?)";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->bind_param('iii', $orderID, $productID, $quantity);
+        $stmt->execute();
+    }
+}
+
+function getOrders($mysqli)
+{
+    $sql = "SELECT o.ID, o.dtDate, o.strStatus, u.strUserName as strOwnerName FROM tblOrder o
+    left join tblUser u on o.idOwner = u.ID";
+
+    $result = $mysqli->query($sql);
+
+    // Initialize an array to hold the orders
+    $orders = array();
+
+    // Loop through the orders
+    while ($row = $result->fetch_assoc()) {
+        $orders[] = $row;
+    }
+
+    return $orders;
+}
+
+function updateOrder($mysqli, $id, $strStatus)
+{
+    $sql = "UPDATE tblOrder SET strStatus = ? WHERE ID = ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param('si', $strStatus, $id);
+    $stmt->execute();
+}
+
+function deleteOrder($mysqli, $id)
+{
+    $sql = "DELETE FROM tblOrderProduct WHERE idOrder = ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+
+    $sql = "DELETE FROM tblOrder WHERE ID = ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param('i', $id);
     $stmt->execute();
 }

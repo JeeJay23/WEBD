@@ -23,6 +23,8 @@ if ($user) {
         $_SESSION['uid'] = $user['ID'];
         $_SESSION['uname'] = $user['strUsername'];
         $_SESSION['admin'] = $user['blAdmin'];
+        $_SESSION['cart'] = array();
+
         // Redirect to the home page
         header("Location: index.php");
     } else {

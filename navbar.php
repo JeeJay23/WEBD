@@ -32,6 +32,7 @@
                     <?php if ($_SESSION['admin']): ?>
                         <li><a class="text-warning dropdown-item" href="edit-categories.php">edit categories</a></li>
                         <li><a class="text-warning dropdown-item" href="edit-products.php">edit products</a></li>
+                        <li><a class="text-warning dropdown-item" href="edit-orders.php">edit orders</a></li>
                     <?php endif; ?>
                     <li><a class="text-danger dropdown-item" href="#">Logout</a></li>
                 </ul>
