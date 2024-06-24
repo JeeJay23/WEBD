@@ -6,7 +6,7 @@
 
     <?php 
         session_start();
-        $categories = getCategories($mysqli);
+        $categories = getCategoriesFlat($mysqli);
     ?>
 
     <ul class="nav nav-pills">

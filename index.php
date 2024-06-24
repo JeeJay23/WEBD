@@ -15,9 +15,6 @@
     include 'navbar.php';
     ?>
 
-    <?= 'user id: ' . $_SESSION['uid'] ?>
-    <?= 'username: ' . $_SESSION['uname'] ?>
-
     <div class="flex-container">
         <div class="container">
             <h1 class="text-danger">SALE SALE SALE</h1>

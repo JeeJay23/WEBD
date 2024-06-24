@@ -9,43 +9,57 @@
 </head>
 
 <body>
-    <?php include 'database.php'; ?>
-    <?php include 'navbar.php'; ?>
+    <?php 
+        include 'database.php'; 
+        include 'common-functions.php';
+        include 'navbar.php';
+    ?>
 
     <div class="container">
         <?php
-            // Query to fetch data
-            $sql = "SELECT t.ID, t.strName, fltPrice, strDescription, blbThumbnail, c.strName as categoryName FROM tblproduct t
-            INNER JOIN category c ON t.idCategory = c.ID
-            WHERE t.ID = " . $_GET['id'];
-            // Execute the query
-            $result = $mysqli->query($sql);
-            // Check if there are any results
-            if ($result->num_rows > 0) {
-                // Output data for each row
-                while ($row = $result->fetch_assoc()) {
-                    $productID = $row['ID'];
-                    // Convert the blob to a base64 encoded string
-                    $image = base64_encode($row['blbThumbnail']);
-                    echo '<div class="container">';
-                    echo '<div class="row">';
-                    echo '<div class="col-md-6">';
-                    echo '<img src="data:image/jpeg;base64,' . $image . '" class="product-image" alt="bb 1" srcset="">';
-                    echo '</div>';
-                    echo '<div class="col-md-6">';
-                    echo '<p class=.text-info">' . $row['categoryName'] . '</p>';
-                    echo '<h1>' . $row['strName'] . '</h1>';
-                    echo '<h1 ><em class="text-primary">Price: €' . $row['fltPrice'] . '</em></h1>';
-                    echo '<p>' . $row['strDescription'] . '</p>';
-                    echo '<a href="shopping-cart.php?id=' . $productID . '" class="btn btn-primary">Add to cart</a>';
-                    echo '</div>';
-                    echo '</div>';
-                    echo '</div>';
-                }
-            } else {
-                echo "No results";
-            }
+            $product = getProduct($mysqli, $_GET['id']);
+
         ?>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="<?= $product['pthFullImage'] ?>" class="product-image" alt="<?= $product['pthFullImage'] ?>">
+                </div>
+                <div class="col-md-6">
+                    <h1><?= $product['strName'] ?></h1>
+                    <p class="text-info"><?= $product['strCategoryName'] ?></p>
+                    <p><?= $product['strDescription'] ?></p>
+                    <p class="text-primary">€<?= $product['fltPrice'] ?></p>
+                    <a href="shopping-cart.php?id=<?= $product['ID'] ?>" class="btn btn-primary">Add to cart</a>
+                </div>
+            </div>
+
+            <h1>Related products</h1>
+            <div class="row">
+                <?php
+                    // Query to fetch data
+                    $sql = "SELECT * FROM tblproduct WHERE idCategory = " . $product['idCategory'] . " AND ID != " . $product['ID'];
+                    // Execute the query
+                    $result = $mysqli->query($sql);
+                    // Check if there are any results
+                    if ($result->num_rows > 0) {
+                        // Output data for each row
+                        while ($row = $result->fetch_assoc()) {
+                            $productID = $row['ID'];
+                            echo '<div class="col-3">';
+                            echo '<img src="' . $row['pthFullImage'] . '" width="200" height="200" alt="bb 1" srcset="">';
+                            echo '<p>' . $row['strName'] . '</p>';
+                            echo '<p class="text-primary">€' . $row['fltPrice'] . '</p>';
+                            echo '<a href="detail.php?id=' . $productID . '"class="btn btn-primary">View</a>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo "No results";
+                    }
+                ?>
+            </div>
+        </div>
     </div>
 
     <!-- reload page on click for easy debugging -->

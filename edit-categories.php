@@ -99,7 +99,7 @@
                 </div>
             <?php endforeach; ?>
         </div>
-
+    </div>
 
         <!-- reload page on click for easy debugging -->
         <script>
