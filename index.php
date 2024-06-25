@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -18,6 +19,11 @@
     <div class="flex-container">
         <div class="container">
             <h1 class="text-danger">SALE SALE SALE</h1>
+            <?php
+            $onSale = true;
+            include 'list-view.php';
+            unset($onSale);
+            ?>
 
             <h1>Categories</h1>
             <?php
@@ -25,14 +31,18 @@
 
             // loop through $categories to display them
             echo '<ul>';
+            echo '<div class="row">';
             foreach ($categories as $category) {
+                echo '<div class="col-md-4">';
                 echo '<li><a href="index.php?category=' . $category['ID'] . '"> <h3>' . $category['strName'] . '</h3></a>';
                 echo '<ul>';
                 foreach ($category['subcategories'] as $subcategory) {
                     echo '<li><a href="index.php?category=' . $subcategory['ID'] . '"><h4>' . $subcategory['strName'] . '</h4></a></li>';
                 }
                 echo '</li></ul>';
+                echo '</div>';
             }
+            echo '</div>';
             echo '</ul>';
             ?>
 
@@ -48,12 +58,6 @@
         </div>
     </div>
 
-    <!-- reload page on click for easy debugging -->
-    <script>
-        window.addEventListener('focus', () => {
-            document.location = document.location
-        })
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 

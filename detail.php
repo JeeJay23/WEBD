@@ -30,7 +30,20 @@
                     <h1><?= $product['strName'] ?></h1>
                     <p class="text-info"><?= $product['strCategoryName'] ?></p>
                     <p><?= $product['strDescription'] ?></p>
-                    <p class="text-primary">€<?= $product['fltPrice'] ?></p>
+                    <?php
+                    $price = $product['fltPrice'];
+                    if ($product['fltDiscountRate'] > 0) {
+                        $price *= (1 - $product['fltDiscountRate']/100);
+                    }
+                    ?>
+                    <h3 class="text-primary">
+                        €<?= number_format($price, 2) ?>
+                        <?php 
+                            if ($product['fltDiscountRate'] > 0) {
+                                echo '<span class="badge bg-success">' . number_format($product['fltDiscountRate'], 0) . '% off</span>';
+                            }
+                        ?>
+                    </h3>
                     <form action="shopping-cart.php" method="post">
                         <input type="hidden" name="action" value="add">
                         <input type="hidden" name="ID" value="<?= $product['ID'] ?>">

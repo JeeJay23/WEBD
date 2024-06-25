@@ -72,10 +72,14 @@ function deleteCategory($mysqli, $id)
     $stmt->execute();
 }
 
-function getProducts($mysqli)
+function getProducts($mysqli, $onSale = false)
 {
-    $sql = "SELECT p.ID, p.strName, p.idCategory, c.strName as strCategoryName, p.pthFullImage, p.strDescription, p.fltPrice FROM tblProduct p
+    $sql = "SELECT p.ID, p.strName, p.idCategory, c.strName as strCategoryName, p.pthFullImage, p.strDescription, p.fltPrice, p.fltDiscountRate FROM tblProduct p
     left join category c on p.idCategory = c.ID";
+
+    if ($onSale) {
+        $sql .= " WHERE p.fltDiscountRate > 0";
+    }
 
     $result = $mysqli->query($sql);
 
@@ -92,7 +96,7 @@ function getProducts($mysqli)
 
 function getProduct($mysqli, $id)
 {
-    $sql = "SELECT p.ID, p.strName, p.idCategory, c.strName as strCategoryName, p.strDescription, p.fltPrice, p.pthFullImage FROM tblProduct p 
+    $sql = "SELECT p.ID, p.strName, p.idCategory, c.strName as strCategoryName, p.strDescription, p.fltPrice, p.pthFullImage, p.fltDiscountRate FROM tblProduct p 
     left join category c on p.idCategory = c.ID
     WHERE p.ID = ?";
     $stmt = $mysqli->prepare($sql);
@@ -122,18 +126,16 @@ function getProductsByCategory($mysqli, $idCategory)
     return $products;
 }
 
-function updateProduct($mysqli, $id, $strName, $idCategory, $blbFullImage, $strDescription, $fltPrice)
+function updateProduct($mysqli, $id, $strName, $idCategory, $blbFullImage, $strDescription, $fltPrice, $fltDiscountRate)
 {
     // Handle the file upload
     $target_dir = "img/";
     $target_file = $target_dir . basename($blbFullImage["name"]);
     move_uploaded_file($blbFullImage["tmp_name"], $target_file);
 
-    $blbUploadImage = fopen($target_file, 'rb');
-
-    $sql = "UPDATE tblProduct SET strName = ?, idCategory = ?, pthFullImage = ?, strDescription = ?, fltPrice = ? WHERE ID = ?";
+    $sql = "UPDATE tblProduct SET strName = ?, idCategory = ?, pthFullImage = ?, strDescription = ?, fltPrice = ? , fltDiscountRate = ? WHERE ID = ?";
     $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param('sisssi', $strName, $idCategory, $target_file, $strDescription, $fltPrice, $id);
+    $stmt->bind_param('sissssi', $strName, $idCategory, $target_file, $strDescription, $fltPrice, $fltDiscountRate, $id);
     $stmt->execute();
 }
 

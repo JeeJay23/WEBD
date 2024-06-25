@@ -32,7 +32,8 @@
                 $_POST['idCategory'],
                 $_FILES['blbFullImage'],
                 $_POST['strDescription'],
-                $_POST['fltPrice']
+                $_POST['fltPrice'],
+                $_POST['fltDiscountRate']
             );
         } elseif ($_POST['action'] === 'delete') {
             deleteProduct($mysqli, $_POST['id']);
@@ -54,6 +55,7 @@
                         <th>Image</th>
                         <th>Description</th>
                         <th>Price</th>
+                        <th>Discount</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -69,6 +71,7 @@
                             <td><img src="<?= $product['pthFullImage'] ?>" width="100" height="100" alt="<?= $product['pthFullImage'] ?>" srcset=""></td>
                             <td><?= $product['strDescription'] ?></td>
                             <td><?= $product['fltPrice'] ?></td>
+                            <td><?= $product['fltDiscountRate'] ?></td>
                             <td>
                                 <a href="edit-product.php?id=<?= $product['ID'] ?>" class="btn btn-primary">Edit</a>
                                 <form action="edit-products.php" method="post" style="display: inline;">

@@ -16,6 +16,11 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($_POST['action'] === 'add') {
+            // check if user is logged in
+            if (!isset($_SESSION['uid'])) {
+                echo '<div class="alert alert-danger" role="alert">You need to be logged in to add products to your cart</div>';
+                die();
+            }
             // add product to session
             $_SESSION['cart'][$_POST['ID']] += $_POST['quantity'];
 

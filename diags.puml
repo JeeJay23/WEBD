@@ -1,0 +1,64 @@
+@startuml
+title ERD
+
+entity tblUser {
+    +int ID
+    +string strName
+    +string strEmail
+    +string hshPassword
+    +bool blAdmin
+}
+
+entity tblCategory{
+    +int ID
+    +string strName
+    +int idParentCategory
+}
+
+entity tblProduct{
+    +int ID
+    +int idCategory
+    +string strName
+    +string strDescription
+    +string pthFullImage
+    +string pthThumbImage
+    +float fltDiscountRate
+    +float intPrice
+}
+
+entity tblOrder{
+    +int ID
+    +int idUser
+    +date dtPurchase 
+    +string strStatus
+}
+
+entity tblOrderProduct{
+    +int ID
+    +int idOrder
+    +int idProduct
+    +int intQuantity
+}
+
+tblUser ||--|{ tblOrder
+tblOrder ||--|{ tblOrderProduct
+tblOrderProduct }|--|| tblProduct
+tblProduct }|--|| tblCategory
+tblCategory }|--|| tblCategory 
+
+@enduml
+
+@startwbs
+title sitemap
+* index
+** catalog
+*** category N
+**** detail
+** login
+*** create-account
+** shopping-cart
+** admin
+*** edit-categories
+*** edit-products
+*** edit-orders
+@endwbs

@@ -54,6 +54,10 @@
                     <label for="fltPrice" class="form-label">Product Price</label>
                     <input type="number" step="0.01" class="form-control" id="fltPrice" name="fltPrice" value="<?= $product['fltPrice'] ?>" required>
                 </div>
+                <div class="mb-3">
+                    <label for="fltDiscountRate" class="form-label">Discount (set to zero for no discount)</label>
+                    <input type="number" step="0.01" class="form-control" id="fltDiscountRate" name="fltDiscountRate" value="<?= $product['fltDiscountRate'] ?>" required>
+                </div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
             <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
