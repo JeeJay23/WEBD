@@ -33,10 +33,10 @@
                     <select name="idCategory" class="form-control" required>
                         <?php foreach ($categories as $category) : ?>
                             <option value="<?= $category['ID'] ?>" <?php
-                                                                        if ($category['ID'] == $product['idCategory']) {
-                                                                            echo 'selected';
-                                                                        }
-                                                                        ?>>
+                                                                    if ($category['ID'] == $product['idCategory']) {
+                                                                        echo 'selected';
+                                                                    }
+                                                                    ?>>
                                 <?= $category['strName'] ?>
                             </option>
                         <?php endforeach; ?>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="strDescription" class="form-label">Product Description</label>
-                    <textarea class="form-control" id="strDescription" name="strDescription" ><?= $product['strDescription'] ?></textarea>
+                    <textarea class="form-control" id="strDescription" name="strDescription"><?= $product['strDescription'] ?></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="fltPrice" class="form-label">Product Price</label>
@@ -56,6 +56,17 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
+            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+                <div id="priceToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <strong class="me-auto">Warning</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        Product price cannot be less than zero.
+                    </div>
+                </div>
+            </div>
             <form action="edit-products.php">
                 <input type="hidden" name="action" value="delete">
                 <input type="hidden" name="id" value="<?= $product['ID'] ?>">
@@ -64,6 +75,22 @@
         </div>
 
 
+        <script>
+            document.querySelector('form').addEventListener('submit', function(event) {
+                var priceInput = document.getElementById('fltPrice');
+                var priceValue = parseFloat(priceInput.value);
+
+                if (priceValue < 0) {
+                    priceInput.classList.add('is-invalid');
+                    event.preventDefault();
+                    priceInput.focus();
+
+                    var toastEl = document.getElementById('priceToast');
+                    var toast = new bootstrap.Toast(toastEl);
+                    toast.show();
+                }
+            });
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 
